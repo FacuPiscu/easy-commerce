@@ -1,0 +1,118 @@
+.registration-header {
+  text-align: center;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.registration-header h2 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+  color: var(--text-dark);
+}
+
+.registration-header p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.registration-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group.full-width {
+  grid-column: span 2;
+}
+
+.form-group label {
+  font-size: 0.825rem;
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+.form-group input, 
+.form-group select {
+  padding: 0.6rem 1rem; /* Mas compacto para reducir altura */
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  width: 100%;
+}
+
+.form-group input:focus, 
+.form-group select:focus {
+  outline: none;
+  border-color: var(--input-focus);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.role-selector {
+  display: grid;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.role-selector.vertical {
+  grid-template-columns: 1fr;
+}
+
+.role-option {
+  padding: 12px;
+  border: 2px solid var(--input-border);
+  border-radius: var(--radius-md);
+  text-align: center;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+  color: var(--text-muted);
+}
+
+.role-option:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+.role-option.active {
+  background: var(--primary-gradient);
+  border-color: transparent;
+  color: white;
+}
+
+.submit-button {
+  margin-top: 12px;
+  padding: 14px;
+  background: var(--primary-gradient);
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: var(--radius-md);
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.submit-button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.submit-button:active {
+  transform: translateY(0);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.seller-field {
+  animation: fadeIn 300ms ease-out forwards;
+}

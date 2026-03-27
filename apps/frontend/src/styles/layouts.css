@@ -1,0 +1,58 @@
+.forms-layout {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Gradiente semi-transparente sobre la imagen de fondo para mejor contraste */
+  background-image: linear-gradient(rgba(46, 16, 101, 0.35), rgba(109, 40, 217, 0.35)), url('/images/fondo_login.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 20px;
+  position: relative;
+  overflow-y: hidden;
+}
+
+.auth-container {
+  background: var(--bg-pure-white);
+  padding: 3rem 2.5rem; /* Padding generoso para sensacion de bloque cuadrado */
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 580px; /* Mas ancho para permitir 2 columnas */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  animation: fadeInLayout 600ms ease-out forwards;
+}
+
+.auth-logo {
+  max-width: 120px; /* Logo mas compacto */
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.shared-footer {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  font-family: var(--font-alt);
+  font-size: 0.85rem;
+  color: white;
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+
+@keyframes fadeInLayout {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 30px 20px;
+  }
+}
