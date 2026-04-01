@@ -1,5 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { loginUser } from '../services/authService';
 import '../styles/layouts.css';
 
 /**
@@ -9,6 +10,28 @@ import '../styles/layouts.css';
  * siguiendo los lineamientos de diseño corporativo de Easy Soft.
  */
 const LoginPage: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      await loginUser({ email, password });
+      navigate('/home');
+    } catch (err: any) {
+      setError('Email o contraseña incorrectos');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="forms-layout">
       <div className="auth-container">
@@ -17,21 +40,36 @@ const LoginPage: React.FC = () => {
         <header className="registration-header">
           <h2>Iniciar Sesion</h2>
           <p>Ingresa tus credenciales para continuar.</p>
+          {error && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
         </header>
 
-        <form className="registration-form" onSubmit={(e) => e.preventDefault()}>
+        <form className="registration-form" onSubmit={handleSubmit}>
           <div className="form-group full-width">
             <label htmlFor="email">Correo Electronico</label>
-            <input type="email" id="email" placeholder="tu@email.com" />
+            <input 
+              type="email" 
+              id="email" 
+              placeholder="tu@email.com" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </div>
 
           <div className="form-group full-width">
             <label htmlFor="password">Contrasena</label>
-            <input type="password" id="password" placeholder="••••••••" />
+            <input 
+              type="password" 
+              id="password" 
+              placeholder="••••••••" 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
           </div>
 
-          <button type="submit" className="submit-button full-width">
-            Ingresar
+          <button type="submit" className="submit-button full-width" disabled={isLoading}>
+            {isLoading ? 'Ingresando...' : 'Ingresar'}
           </button>
         </form>
 

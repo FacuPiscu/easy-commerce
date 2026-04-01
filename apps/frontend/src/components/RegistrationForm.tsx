@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { registerUser } from '../services/authService';
 import '../styles/RegistrationForm.css';
 
 /**
@@ -48,6 +50,8 @@ const RegistrationForm: React.FC = () => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   /**
    * Actualiza el estado del formulario cuando se modifica un campo de entrada.
@@ -92,15 +96,16 @@ const RegistrationForm: React.FC = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError(null);
     
-    // Logica de registro a ser implementada e integrada con el servicio de backend
-    console.log('Informacion de registro enviada:', formData);
-    
-    // Simulacion de proceso asincrono para demostrar estados visuales
-    setTimeout(() => {
+    try {
+      await registerUser(formData);
+      navigate('/login');
+    } catch (err: any) {
+      setError(err.message || 'Error en el registro de usuario');
+    } finally {
       setIsLoading(false);
-      alert(`${formData.firstName}, tu registro como ${formData.role === UserRole.BUYER ? 'Comprador' : 'Vendedor'} se ha iniciado.`);
-    }, 1500);
+    }
   };
 
   return (
@@ -108,6 +113,7 @@ const RegistrationForm: React.FC = () => {
       <header className="registration-header">
         <h2>Crear Cuenta</h2>
         <p>Unete a Easy Commerce y comienza tu camino hoy.</p>
+        {error && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
       </header>
 
       <form className="registration-form" onSubmit={handleSubmit}>

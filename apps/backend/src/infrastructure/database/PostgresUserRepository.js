@@ -18,7 +18,7 @@ class PostgresUserRepository {
    */
   async findByEmail(email) {
     const result = await query(
-      'SELECT id, first_name, last_name, email, role, created_at FROM usuarios WHERE email = $1',
+      'SELECT id, first_name, last_name, email, role, password, created_at FROM users WHERE email = $1',
       [email]
     );
 
@@ -36,7 +36,7 @@ class PostgresUserRepository {
    */
   async create({ firstName, lastName, email, role, password }) {
     const result = await query(
-      `INSERT INTO usuarios (first_name, last_name, email, role, password)
+      `INSERT INTO users (first_name, last_name, email, role, password)
        VALUES ($1, $2, $3, $4, $5)
        RETURNING id, first_name, last_name, email, role, created_at`,
       [firstName, lastName, email, role, password]
@@ -56,6 +56,7 @@ class PostgresUserRepository {
       lastName: row.last_name,
       email: row.email,
       role: row.role,
+      password: row.password,
       createdAt: row.created_at,
     };
   }
@@ -74,7 +75,7 @@ class PostgresStoreRepository {
    */
   async create({ userId, name, slug, subscriptionStatus, trialEndDate, isVisible }) {
     const result = await query(
-      `INSERT INTO tiendas (user_id, name, slug, subscription_status, trial_end_date, is_visible)
+      `INSERT INTO stores (user_id, name, slug, subscription_status, trial_end_date, is_visible)
        VALUES ($1, $2, $3, $4, $5, $6)
        RETURNING id, user_id, name, slug, subscription_status, trial_end_date, is_visible`,
       [userId, name, slug, subscriptionStatus, trialEndDate, isVisible]

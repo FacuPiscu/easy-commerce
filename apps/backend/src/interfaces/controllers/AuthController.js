@@ -1,4 +1,5 @@
 const RegisterUserUseCase = require('../../useCases/RegisterUserUseCase');
+const LoginUserUseCase = require('../../useCases/LoginUserUseCase');
 const { PostgresUserRepository, PostgresStoreRepository } = require('../../infrastructure/database/PostgresUserRepository');
 const { AppError } = require('../../domain/exceptions/AppError');
 
@@ -53,4 +54,36 @@ const register = async (req, res, next) => {
   }
 };
 
-module.exports = { register };
+/**
+ * Endpoint para autenticar (login) de usuarios.
+ */
+const login = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    const userRepository = new PostgresUserRepository();
+    
+    const loginUser = new LoginUserUseCase({
+      userRepository,
+    });
+
+    const result = await loginUser.execute({ email, password });
+
+    return res.status(200).json({
+      status: 'success',
+      message: 'Login exitoso.',
+      data: result,
+    });
+  } catch (error) {
+    if (error instanceof AppError) {
+      return res.status(error.statusCode).json({
+        status: 'error',
+        message: error.message,
+      });
+    }
+
+    next(error);
+  }
+};
+
+module.exports = { register, login };

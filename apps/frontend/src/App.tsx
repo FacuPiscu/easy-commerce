@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import WelcomePage from './pages/WelcomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import HomePage from './pages/HomePage';
+
 import './App.css';
 
 /**
@@ -22,6 +24,9 @@ function App() {
         
         {/* Ruta para el registro de nuevos usuarios */}
         <Route path="/register" element={<RegisterPage />} />
+        
+        {/* Ruta protegida post-login principal (Marketplace) */}
+        <Route path="/home" element={<HomePage />} />
       </Routes>
     </Router>
   );

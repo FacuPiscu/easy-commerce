@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { register } = require('../../interfaces/controllers/AuthController');
+const { register, login } = require('../../interfaces/controllers/AuthController');
 
 /**
  * Rutas de autenticacion del sistema.
@@ -8,5 +8,6 @@ const { register } = require('../../interfaces/controllers/AuthController');
 const router = Router();
 
 router.post('/register', register);
+router.post('/login', login);
 
 module.exports = router;
